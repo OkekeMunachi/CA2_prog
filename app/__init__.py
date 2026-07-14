@@ -1,12 +1,10 @@
 from flask import Flask
+from app.routes import register_routes
+
 
 def create_app():
     app = Flask(__name__)
 
-    @app.route("/")
-    def home():
-        return {
-            "message": "Welcome to ACME Technologies Issue Tracker API"
-        }
+    register_routes(app)
 
     return app
