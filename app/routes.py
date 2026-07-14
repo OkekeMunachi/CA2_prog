@@ -13,7 +13,6 @@ def register_routes(app):
 
     @app.route("/issues", methods=["POST"])
     def create_issue():
-
         data = request.get_json()
 
         issue = Issue(
@@ -30,3 +29,20 @@ def register_routes(app):
             "message": "Issue created successfully",
             "issue_id": issue.id
         }), 201
+
+    @app.route("/issues", methods=["GET"])
+    def get_issues():
+        issues = Issue.query.all()
+
+        issue_list = []
+
+        for issue in issues:
+            issue_list.append({
+                "id": issue.id,
+                "title": issue.title,
+                "description": issue.description,
+                "status": issue.status,
+                "priority": issue.priority
+            })
+
+        return jsonify(issue_list), 200
