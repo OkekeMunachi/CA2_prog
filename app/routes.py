@@ -341,10 +341,12 @@ def register_routes(app):
             "message": "Vulnerability deleted successfully"
         }), 200
 
-        # Summary Report
+         
+         # Summary Report
     @app.route("/reports/summary", methods=["GET"])
     def summary_report():
 
+        # Issue statistics
         total_issues = Issue.query.count()
 
         open_issues = Issue.query.filter_by(
@@ -355,11 +357,33 @@ def register_routes(app):
             status="Closed"
         ).count()
 
+        # Vulnerability statistics
         total_vulnerabilities = Vulnerability.query.count()
+
+        critical_vulnerabilities = Vulnerability.query.filter_by(
+            severity="Critical"
+        ).count()
+
+        high_vulnerabilities = Vulnerability.query.filter_by(
+            severity="High"
+        ).count()
+
+        medium_vulnerabilities = Vulnerability.query.filter_by(
+            severity="Medium"
+        ).count()
+
+        low_vulnerabilities = Vulnerability.query.filter_by(
+            severity="Low"
+        ).count()
 
         return jsonify({
             "total_issues": total_issues,
             "open_issues": open_issues,
             "closed_issues": closed_issues,
-            "total_vulnerabilities": total_vulnerabilities
+
+            "total_vulnerabilities": total_vulnerabilities,
+            "critical_vulnerabilities": critical_vulnerabilities,
+            "high_vulnerabilities": high_vulnerabilities,
+            "medium_vulnerabilities": medium_vulnerabilities,
+            "low_vulnerabilities": low_vulnerabilities
         }), 200
