@@ -33,16 +33,22 @@ def register_routes(app):
             "issue_id": issue.id
         }), 201
 
-    # READ ALL Issues
+      # READ ALL Issues with filtering
     @app.route("/issues", methods=["GET"])
     def get_issues():
 
         status_filter = request.args.get("status")
+        priority_filter = request.args.get("priority")
+
+        query = Issue.query
 
         if status_filter:
-            issues = Issue.query.filter_by(status=status_filter).all()
-        else:
-            issues = Issue.query.all()
+            query = query.filter_by(status=status_filter)
+
+        if priority_filter:
+            query = query.filter_by(priority=priority_filter)
+
+        issues = query.all()
 
         issue_list = []
 
