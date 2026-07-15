@@ -54,7 +54,8 @@ def register_routes(app):
             }), 400
 
         status = data.get("status", "Open")
-        priority = data.get("priority", "Medium")
+        priority=data.get("priority", "Medium"),
+        vulnerability_id=data.get("vulnerability_id")
 
         if status not in VALID_STATUSES:
             return jsonify({
