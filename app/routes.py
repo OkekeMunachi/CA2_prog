@@ -173,7 +173,14 @@ def register_routes(app):
     @app.route("/vulnerabilities", methods=["GET"])
     def get_vulnerabilities():
 
-        vulnerabilities = Vulnerability.query.all()
+        severity_filter = request.args.get("severity")
+
+        query = Vulnerability.query
+
+        if severity_filter:
+            query = query.filter_by(severity=severity_filter)
+
+        vulnerabilities = query.all()
 
         vulnerability_list = []
 
