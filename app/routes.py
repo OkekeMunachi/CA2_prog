@@ -1,6 +1,6 @@
 from flask import jsonify, request
 from app.database import db
-from app.models import Issue
+from app.models import Issue, Vulnerability
 
 
 def register_routes(app):
@@ -119,3 +119,24 @@ def register_routes(app):
         return jsonify({
             "message": "Issue deleted successfully"
         }), 200
+
+    # CREATE Vulnerability
+    @app.route("/vulnerabilities", methods=["POST"])
+    def create_vulnerability():
+
+        data = request.get_json()
+
+        vulnerability = Vulnerability(
+            title=data["title"],
+            description=data["description"],
+            severity=data.get("severity", "Medium"),
+            cve_id=data.get("cve_id")
+        )
+
+        db.session.add(vulnerability)
+        db.session.commit()
+
+        return jsonify({
+            "message": "Vulnerability created successfully",
+            "vulnerability_id": vulnerability.id
+        }), 201
