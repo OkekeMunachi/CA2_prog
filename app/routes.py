@@ -136,8 +136,8 @@ def register_routes(app):
 
         if issue is None:
             return jsonify({
-                "error": "Issue not found"
-            }), 404
+                "error": f"Issue with ID {issue_id} was not found"
+                }), 404
 
         return jsonify({
             "id": issue.id,
@@ -155,8 +155,8 @@ def register_routes(app):
 
         if issue is None:
             return jsonify({
-                "error": "Issue not found"
-            }), 404
+                "error": f"Issue with ID {issue_id} was not found"
+                }), 404
 
         data = request.get_json()
 
@@ -192,8 +192,8 @@ def register_routes(app):
 
         if issue is None:
             return jsonify({
-                "error": "Issue not found"
-            }), 404
+                "error": f"Issue with ID {issue_id} was not found"
+                }), 404
 
         db.session.delete(issue)
         db.session.commit()
@@ -288,7 +288,7 @@ def register_routes(app):
 
         if vulnerability is None:
             return jsonify({
-                "error": "Vulnerability not found"
+                "error": f"Vulnerability with ID {vulnerability_id} was not found"
             }), 404
 
         return jsonify({
@@ -307,7 +307,7 @@ def register_routes(app):
 
         if vulnerability is None:
             return jsonify({
-                "error": "Vulnerability not found"
+                "error": f"Vulnerability with ID {vulnerability_id} was not found"
             }), 404
 
         data = request.get_json()
@@ -331,7 +331,7 @@ def register_routes(app):
 
         if vulnerability is None:
             return jsonify({
-                "error": "Vulnerability not found"
+                "error": f"Vulnerability with ID {vulnerability_id} was not found"
             }), 404
 
         db.session.delete(vulnerability)
