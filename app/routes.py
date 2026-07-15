@@ -200,6 +200,21 @@ def register_routes(app):
     def create_vulnerability():
 
         data = request.get_json()
+        
+        if not data:
+            return jsonify({
+                "error": "Request body is required"
+            }), 400
+        
+        if "title" not in data:
+            return jsonify({
+                "error": "Title is required"
+            }), 400
+
+        if "description" not in data:
+            return jsonify({
+                "error": "Description is required"
+            }), 400
 
         vulnerability = Vulnerability(
             title=data["title"],
