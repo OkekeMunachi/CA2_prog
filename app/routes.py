@@ -140,3 +140,22 @@ def register_routes(app):
             "message": "Vulnerability created successfully",
             "vulnerability_id": vulnerability.id
         }), 201
+
+     # READ ALL Vulnerabilities
+    @app.route("/vulnerabilities", methods=["GET"])
+    def get_vulnerabilities():
+
+        vulnerabilities = Vulnerability.query.all()
+
+        vulnerability_list = []
+
+        for vulnerability in vulnerabilities:
+            vulnerability_list.append({
+                "id": vulnerability.id,
+                "title": vulnerability.title,
+                "description": vulnerability.description,
+                "severity": vulnerability.severity,
+                "cve_id": vulnerability.cve_id
+            })
+
+        return jsonify(vulnerability_list), 200
