@@ -169,16 +169,24 @@ def register_routes(app):
             "vulnerability_id": vulnerability.id
         }), 201
 
-     # READ ALL Vulnerabilities
+         # READ ALL Vulnerabilities with filtering and search
     @app.route("/vulnerabilities", methods=["GET"])
     def get_vulnerabilities():
 
         severity_filter = request.args.get("severity")
+        search_term = request.args.get("search")
 
         query = Vulnerability.query
 
+        # Filter by severity
         if severity_filter:
             query = query.filter_by(severity=severity_filter)
+
+        # Search by title
+        if search_term:
+            query = query.filter(
+                Vulnerability.title.contains(search_term)
+            )
 
         vulnerabilities = query.all()
 
