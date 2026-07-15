@@ -179,3 +179,27 @@ def register_routes(app):
             "severity": vulnerability.severity,
             "cve_id": vulnerability.cve_id
         }), 200
+
+     # UPDATE Vulnerability
+    @app.route("/vulnerabilities/<int:vulnerability_id>", methods=["PUT"])
+    def update_vulnerability(vulnerability_id):
+
+        vulnerability = Vulnerability.query.get(vulnerability_id)
+
+        if vulnerability is None:
+            return jsonify({
+                "error": "Vulnerability not found"
+            }), 404
+
+        data = request.get_json()
+
+        vulnerability.title = data.get("title", vulnerability.title)
+        vulnerability.description = data.get("description", vulnerability.description)
+        vulnerability.severity = data.get("severity", vulnerability.severity)
+        vulnerability.cve_id = data.get("cve_id", vulnerability.cve_id)
+
+        db.session.commit()
+
+        return jsonify({
+            "message": "Vulnerability updated successfully"
+        }), 200
