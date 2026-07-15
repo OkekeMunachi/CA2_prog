@@ -54,7 +54,7 @@ def register_routes(app):
             }), 400
 
         status = data.get("status", "Open")
-        priority=data.get("priority", "Medium"),
+        priority=data.get("priority", "Medium")
         vulnerability_id=data.get("vulnerability_id")
 
         if status not in VALID_STATUSES:
@@ -294,18 +294,6 @@ def register_routes(app):
             return jsonify({
                 "error": f"Vulnerability with ID {vulnerability_id} was not found"
             }), 404
-
-            issues = []
-
-            for issue in vulnerability.issues:
-                issues.append({
-                    "id": issue.id,
-                    "title": issue.title,
-                    "status": issue.status,
-                    "priority": issue.priority
-                    })
-
-    return jsonify(issues), 200
 
         return jsonify({
             "id": vulnerability.id,
