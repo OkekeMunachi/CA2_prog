@@ -33,20 +33,29 @@ def register_routes(app):
             "issue_id": issue.id
         }), 201
 
-      # READ ALL Issues with filtering
+          # READ ALL Issues with filtering and search
     @app.route("/issues", methods=["GET"])
     def get_issues():
 
         status_filter = request.args.get("status")
         priority_filter = request.args.get("priority")
+        search_term = request.args.get("search")
 
         query = Issue.query
 
+        # Filter by status
         if status_filter:
             query = query.filter_by(status=status_filter)
 
+        # Filter by priority
         if priority_filter:
             query = query.filter_by(priority=priority_filter)
+
+        # Search by title
+        if search_term:
+            query = query.filter(
+                Issue.title.contains(search_term)
+            )
 
         issues = query.all()
 
@@ -62,7 +71,7 @@ def register_routes(app):
             })
 
         return jsonify(issue_list), 200
-
+        
     # READ ONE Issue
     @app.route("/issues/<int:issue_id>", methods=["GET"])
     def get_issue(issue_id):
