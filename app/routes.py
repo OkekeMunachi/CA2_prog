@@ -9,6 +9,13 @@ VALID_STATUSES = [
     "Closed"
 ]
 
+VALID_PRIORITIES = [
+    "Low",
+    "Medium",
+    "High",
+    "Critical"
+]
+
 def register_routes(app):
 
     # Home Route
@@ -18,13 +25,12 @@ def register_routes(app):
             "message": "Welcome to ACME Technologies Issue Tracker API"
         })
 
-    # CREATE Issue
+    # CREATE ISSUE
     @app.route("/issues", methods=["POST"])
     def create_issue():
 
         data = request.get_json()
 
-        # Validation starts here
         if not data:
             return jsonify({
                 "error": "Request body is required"
@@ -40,11 +46,24 @@ def register_routes(app):
                 "error": "Description is required"
             }), 400
 
+        status = data.get("status", "Open")
+        priority = data.get("priority", "Medium")
+
+        if status not in VALID_STATUSES:
+            return jsonify({
+                "error": f"Status must be one of {VALID_STATUSES}"
+            }), 400
+
+        if priority not in VALID_PRIORITIES:
+            return jsonify({
+                "error": f"Priority must be one of {VALID_PRIORITIES}"
+            }), 400
+
         issue = Issue(
             title=data["title"],
             description=data["description"],
             status=status,
-            priority=data.get("priority", "Medium")
+            priority=priority
         )
 
         db.session.add(issue)
