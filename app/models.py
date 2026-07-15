@@ -63,5 +63,11 @@ class Vulnerability(db.Model):
         nullable=True
     )
 
+    issues = db.relationship(
+        "Issue",
+        backref="vulnerability",
+        lazy=True
+    )
+
     def __repr__(self):
         return f"<Vulnerability {self.title}>"
