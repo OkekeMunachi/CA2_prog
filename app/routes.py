@@ -16,6 +16,13 @@ VALID_PRIORITIES = [
     "Critical"
 ]
 
+VALID_SEVERITIES = [
+    "Low",
+    "Medium",
+    "High",
+    "Critical"
+]
+
 def register_routes(app):
 
     # Home Route
@@ -215,6 +222,13 @@ def register_routes(app):
             return jsonify({
                 "error": "Description is required"
             }), 400
+
+        severity = data.get("severity", "Medium")
+
+        if severity not in VALID_SEVERITIES:
+            return jsonify({
+                "error": f"Severity must be one of {VALID_SEVERITIES}"
+                }), 400
 
         vulnerability = Vulnerability(
             title=data["title"],
