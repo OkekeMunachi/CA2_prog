@@ -5,14 +5,14 @@ from app.models import Issue
 
 def register_routes(app):
 
-    # Home route
+    # Home Route
     @app.route("/")
     def home():
         return jsonify({
             "message": "Welcome to ACME Technologies Issue Tracker API"
         })
 
-    # Create Issue
+    # CREATE Issue
     @app.route("/issues", methods=["POST"])
     def create_issue():
 
@@ -33,7 +33,7 @@ def register_routes(app):
             "issue_id": issue.id
         }), 201
 
-    # Get All Issues
+    # READ ALL Issues
     @app.route("/issues", methods=["GET"])
     def get_issues():
 
@@ -52,7 +52,7 @@ def register_routes(app):
 
         return jsonify(issue_list), 200
 
-    # Get Issue By ID
+    # READ ONE Issue
     @app.route("/issues/<int:issue_id>", methods=["GET"])
     def get_issue(issue_id):
 
@@ -71,7 +71,7 @@ def register_routes(app):
             "priority": issue.priority
         }), 200
 
-    # Update Issue
+    # UPDATE Issue
     @app.route("/issues/<int:issue_id>", methods=["PUT"])
     def update_issue(issue_id):
 
@@ -100,4 +100,22 @@ def register_routes(app):
                 "status": issue.status,
                 "priority": issue.priority
             }
+        }), 200
+
+    # DELETE Issue
+    @app.route("/issues/<int:issue_id>", methods=["DELETE"])
+    def delete_issue(issue_id):
+
+        issue = Issue.query.get(issue_id)
+
+        if issue is None:
+            return jsonify({
+                "error": "Issue not found"
+            }), 404
+
+        db.session.delete(issue)
+        db.session.commit()
+
+        return jsonify({
+            "message": "Issue deleted successfully"
         }), 200
