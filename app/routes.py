@@ -13,6 +13,7 @@ def register_routes(app):
 
     @app.route("/issues", methods=["POST"])
     def create_issue():
+
         data = request.get_json()
 
         issue = Issue(
@@ -32,6 +33,7 @@ def register_routes(app):
 
     @app.route("/issues", methods=["GET"])
     def get_issues():
+
         issues = Issue.query.all()
 
         issue_list = []
@@ -46,3 +48,21 @@ def register_routes(app):
             })
 
         return jsonify(issue_list), 200
+
+    @app.route("/issues/<int:issue_id>", methods=["GET"])
+    def get_issue(issue_id):
+
+        issue = Issue.query.get(issue_id)
+
+        if issue is None:
+            return jsonify({
+                "error": "Issue not found"
+            }), 404
+
+        return jsonify({
+            "id": issue.id,
+            "title": issue.title,
+            "description": issue.description,
+            "status": issue.status,
+            "priority": issue.priority
+        }), 200
