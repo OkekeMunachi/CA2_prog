@@ -38,7 +38,6 @@ The system allows users to:
 |-----------|--------|
 | Flask Framework | Flask Documentation |
 | SQLAlchemy ORM | Flask-SQLAlchemy Documentation |
-| Development Assistance | OpenAI ChatGPT |
 | Business Logic | Self |
 | API Testing | Self |
 
