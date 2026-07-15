@@ -128,6 +128,12 @@ def register_routes(app):
 
         data = request.get_json()
 
+         # Validation 
+        if not data:
+            return jsonify({
+                "error": "Request body is required"
+                }), 400
+
         issue.title = data.get("title", issue.title)
         issue.description = data.get("description", issue.description)
         issue.status = data.get("status", issue.status)
