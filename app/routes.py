@@ -18,6 +18,22 @@ def register_routes(app):
 
         data = request.get_json()
 
+        # Validation starts here
+        if not data:
+            return jsonify({
+                "error": "Request body is required"
+            }), 400
+
+        if "title" not in data:
+            return jsonify({
+                "error": "Title is required"
+            }), 400
+
+        if "description" not in data:
+            return jsonify({
+                "error": "Description is required"
+            }), 400
+
         issue = Issue(
             title=data["title"],
             description=data["description"],
