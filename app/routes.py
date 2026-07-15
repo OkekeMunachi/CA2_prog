@@ -124,7 +124,8 @@ def register_routes(app):
                 "title": issue.title,
                 "description": issue.description,
                 "status": issue.status,
-                "priority": issue.priority
+                "priority": issue.priority,
+                "vulnerability_id": issue.vulnerability_id
             })
 
         return jsonify(issue_list), 200
@@ -145,7 +146,8 @@ def register_routes(app):
             "title": issue.title,
             "description": issue.description,
             "status": issue.status,
-            "priority": issue.priority
+            "priority": issue.priority,
+            "vulnerability_id": issue.vulnerability_id
         }), 200
 
     # UPDATE Issue
@@ -181,7 +183,8 @@ def register_routes(app):
                 "title": issue.title,
                 "description": issue.description,
                 "status": issue.status,
-                "priority": issue.priority
+                "priority": issue.priority,
+                "vulnerability_id": issue.vulnerability_id
             }
         }), 200
 
