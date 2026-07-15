@@ -33,13 +33,14 @@ def register_routes(app):
             "issue_id": issue.id
         }), 201
 
-          # READ ALL Issues with filtering and search
+          # READ ALL Issues with filtering, searching and sorting
     @app.route("/issues", methods=["GET"])
     def get_issues():
 
         status_filter = request.args.get("status")
         priority_filter = request.args.get("priority")
         search_term = request.args.get("search")
+        sort_order = request.args.get("sort")
 
         query = Issue.query
 
@@ -56,6 +57,13 @@ def register_routes(app):
             query = query.filter(
                 Issue.title.contains(search_term)
             )
+
+        # Sort results
+        if sort_order == "priority":
+            query = query.order_by(Issue.priority)
+
+        elif sort_order == "status":
+            query = query.order_by(Issue.status)
 
         issues = query.all()
 
