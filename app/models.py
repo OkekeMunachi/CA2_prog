@@ -26,6 +26,12 @@ class Issue(db.Model):
         default="Medium"
     )
 
+    vulnerability_id = db.Column(
+        db.Integer,
+        db.ForeignKey("vulnerabilities.id"),
+        nullable=True
+    )
+
     def __repr__(self):
         return f"<Issue {self.title}>"
 
