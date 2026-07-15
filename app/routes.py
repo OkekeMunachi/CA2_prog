@@ -340,3 +340,15 @@ def register_routes(app):
         return jsonify({
             "message": "Vulnerability deleted successfully"
         }), 200
+
+        # Summary Report
+    @app.route("/reports/summary", methods=["GET"])
+    def summary_report():
+
+        total_issues = Issue.query.count()
+        total_vulnerabilities = Vulnerability.query.count()
+
+        return jsonify({
+            "total_issues": total_issues,
+            "total_vulnerabilities": total_vulnerabilities
+        }), 200
