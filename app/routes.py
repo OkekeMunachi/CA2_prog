@@ -346,9 +346,20 @@ def register_routes(app):
     def summary_report():
 
         total_issues = Issue.query.count()
+
+        open_issues = Issue.query.filter_by(
+            status="Open"
+        ).count()
+
+        closed_issues = Issue.query.filter_by(
+            status="Closed"
+        ).count()
+
         total_vulnerabilities = Vulnerability.query.count()
 
         return jsonify({
             "total_issues": total_issues,
+            "open_issues": open_issues,
+            "closed_issues": closed_issues,
             "total_vulnerabilities": total_vulnerabilities
         }), 200
