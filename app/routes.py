@@ -159,3 +159,23 @@ def register_routes(app):
             })
 
         return jsonify(vulnerability_list), 200
+
+    
+    # READ ONE Vulnerability
+    @app.route("/vulnerabilities/<int:vulnerability_id>", methods=["GET"])
+    def get_vulnerability(vulnerability_id):
+
+        vulnerability = Vulnerability.query.get(vulnerability_id)
+
+        if vulnerability is None:
+            return jsonify({
+                "error": "Vulnerability not found"
+            }), 404
+
+        return jsonify({
+            "id": vulnerability.id,
+            "title": vulnerability.title,
+            "description": vulnerability.description,
+            "severity": vulnerability.severity,
+            "cve_id": vulnerability.cve_id
+        }), 200
