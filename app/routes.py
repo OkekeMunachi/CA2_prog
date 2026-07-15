@@ -203,3 +203,21 @@ def register_routes(app):
         return jsonify({
             "message": "Vulnerability updated successfully"
         }), 200
+
+        # DELETE Vulnerability
+    @app.route("/vulnerabilities/<int:vulnerability_id>", methods=["DELETE"])
+    def delete_vulnerability(vulnerability_id):
+
+        vulnerability = Vulnerability.query.get(vulnerability_id)
+
+        if vulnerability is None:
+            return jsonify({
+                "error": "Vulnerability not found"
+            }), 404
+
+        db.session.delete(vulnerability)
+        db.session.commit()
+
+        return jsonify({
+            "message": "Vulnerability deleted successfully"
+        }), 200
