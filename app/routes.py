@@ -2,6 +2,12 @@ from flask import jsonify, request
 from app.database import db
 from app.models import Issue, Vulnerability
 
+VALID_STATUSES = [
+    "Open",
+    "In Progress",
+    "Resolved",
+    "Closed"
+]
 
 def register_routes(app):
 
@@ -37,7 +43,7 @@ def register_routes(app):
         issue = Issue(
             title=data["title"],
             description=data["description"],
-            status=data.get("status", "Open"),
+            status=status,
             priority=data.get("priority", "Medium")
         )
 
