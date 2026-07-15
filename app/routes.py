@@ -37,7 +37,12 @@ def register_routes(app):
     @app.route("/issues", methods=["GET"])
     def get_issues():
 
-        issues = Issue.query.all()
+        status_filter = request.args.get("status")
+
+        if status_filter:
+            issues = Issue.query.filter_by(status=status_filter).all()
+        else:
+            issues = Issue.query.all()
 
         issue_list = []
 
