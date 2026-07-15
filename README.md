@@ -32,6 +32,16 @@ The system allows users to:
 ### Reports
 - GET /reports/summary
 
+## Attribution Summary
+
+| Component | Source |
+|-----------|--------|
+| Flask Framework | Flask Documentation |
+| SQLAlchemy ORM | Flask-SQLAlchemy Documentation |
+| Development Assistance | OpenAI ChatGPT |
+| Business Logic | Self |
+| API Testing | Self |
+
 ## Technologies
 
 - Python
