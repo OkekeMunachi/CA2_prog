@@ -295,6 +295,18 @@ def register_routes(app):
                 "error": f"Vulnerability with ID {vulnerability_id} was not found"
             }), 404
 
+            issues = []
+
+            for issue in vulnerability.issues:
+                issues.append({
+                    "id": issue.id,
+                    "title": issue.title,
+                    "status": issue.status,
+                    "priority": issue.priority
+                    })
+
+    return jsonify(issues), 200
+
         return jsonify({
             "id": vulnerability.id,
             "title": vulnerability.title,
